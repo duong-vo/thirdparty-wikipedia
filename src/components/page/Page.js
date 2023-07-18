@@ -18,7 +18,7 @@ function Page() {
     console.log(pageContent);
   })
   .catch(error => {
-    console.error(error);
+    console.error('ERROR:', error);
   });
 
   return (
