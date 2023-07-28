@@ -1,4 +1,5 @@
 import React from 'react';
+import withStyles from '@mui/styles/withStyles';
 import { useRouter } from 'next/router';
 import AppBar from '@mui/material/AppBar';
 import Grid from '@mui/material/Grid';
@@ -6,16 +7,25 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchBar from '../../components/SearchBar';
 
-const Article = () => {
+const styles = () => ({
+  title: {
+    color: 'black',
+  },
+  appBar: {
+    background: 'white',
+  },
+});
+
+const Article = (props) => {
+  const { classes } = props;
   const router = useRouter();
-  const { id } = router.query;
   return (
     <div>
-      <AppBar position="sticky">
+      <AppBar className={classes.appBar} position="sticky">
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography>
+              <Typography className={classes.title} variant="h4">
                 Test
               </Typography>
             </Grid>
@@ -29,4 +39,4 @@ const Article = () => {
   );
 }
 
-export default Article;
+export default withStyles(styles)(Article);
