@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchBar from '../../components/SearchBar';
+import ArticleBody from './ArticleBody';
 
 const styles = () => ({
   title: {
@@ -35,6 +36,7 @@ const Article = (props) => {
           </Grid>
         </Toolbar>
       </AppBar>
+      <ArticleBody />
     </div>
   );
 }

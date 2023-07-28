@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 
-function SearchBar() {
+const SearchBar = () => {
 
   return (
     <div>
