@@ -43,9 +43,9 @@ const Article = (props) => {
   );
 }
 
-export async function getStaticProps() {
+/* export async function getStaticProps() {
   console.log('got here');
-  axios.get('https://en.wikipedia.org/w/api.php', {
+  await axios.get('https://en.wikipedia.org/w/api.php', {
     params: {
       action: 'query',
       format: 'json',
@@ -67,6 +67,41 @@ export async function getStaticProps() {
   return {
     props: { data: 'hi' },
   };
+}
+*/
+
+export async function getStaticProps() {
+  try {
+    const response = await axios.get('https://en.wikipedia.org/w/api.php', {
+      params: {
+        action: 'query',
+        format: 'json',
+        prop: 'extracts',
+        explaintext: true,
+        titles: 'ChatGPT',
+      },
+    });
+
+    const pages = response.data.query.pages;
+    const pageId = Object.keys(pages)[0];
+    const pageContent = pages[pageId].extract;
+
+    console.log(pageContent);
+
+    return {
+      props: {
+        data: pageContent,
+      },
+    };
+  } catch (error) {
+    console.error('ERROR:', error);
+
+    return {
+      props: {
+        data: pageContent,
+      },
+    };
+  }
 }
 
 export async function getStaticPaths() {
