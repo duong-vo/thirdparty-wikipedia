@@ -38,39 +38,14 @@ const Article = (props) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <ArticleBody />
+      <ArticleBody
+        content={data}
+      />
     </div>
   );
 }
 
-/* export async function getStaticProps() {
-  console.log('got here');
-  await axios.get('https://en.wikipedia.org/w/api.php', {
-    params: {
-      action: 'query',
-      format: 'json',
-      prop: 'extracts',
-      explaintext: true,
-      titles: 'ChatGPT'
-    }
-  })
-    .then(response => {
-      const pages = response.data.query.pages;
-      const pageId = Object.keys(pages)[0];
-      const pageContent = pages[pageId].extract;
-      console.log(pageContent);
-    })
-    .catch(error => {
-      console.error('ERROR:', error);
-    });
-
-  return {
-    props: { data: 'hi' },
-  };
-}
-*/
-
-export async function getStaticProps() {
+const getStaticProps = async () => {
   try {
     const response = await axios.get('https://en.wikipedia.org/w/api.php', {
       params: {
@@ -104,7 +79,7 @@ export async function getStaticProps() {
   }
 }
 
-export async function getStaticPaths() {
+const getStaticPaths = () => {
   const paths =  [{ params: { id: 'test' } }];
   return {
     paths,
@@ -113,3 +88,4 @@ export async function getStaticPaths() {
 }
 
 export default withStyles(styles)(Article);
+export { getStaticProps, getStaticPaths };

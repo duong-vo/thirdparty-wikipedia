@@ -4,10 +4,10 @@ import withStyles from '@mui/styles/withStyles';
 const styles = () => ({
 });
 const ArticleBody = (props) => {
-  const { classes } = props;
+  const { classes, content } = props;
   return (
     <div>
-      Body Here
+      {content}
     </div>
   );
 }
