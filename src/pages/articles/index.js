@@ -9,3 +9,8 @@ export default function ArticlesList() {
   );
 }
 
+export async function getStaticPaths() {
+  const paths =  { params: { id: 'test' } }
+
+
+}

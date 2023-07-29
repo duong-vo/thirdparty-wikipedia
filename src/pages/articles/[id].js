@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SearchBar from '../../components/SearchBar';
 import ArticleBody from './ArticleBody';
+import axios from 'axios';
 
 const styles = () => ({
   title: {
@@ -18,15 +19,16 @@ const styles = () => ({
 });
 
 const Article = (props) => {
-  const { classes } = props;
+  const { classes, data } = props;
+  console.log('data', data);
   const router = useRouter();
   return (
     <div>
-      <AppBar className={classes.appBar} position="sticky">
+      <AppBar position="sticky">
         <Toolbar>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography className={classes.title} variant="h4">
+              <Typography variant="h4">
                 Test
               </Typography>
             </Grid>
@@ -39,6 +41,40 @@ const Article = (props) => {
       <ArticleBody />
     </div>
   );
+}
+
+export async function getStaticProps() {
+  console.log('got here');
+  axios.get('https://en.wikipedia.org/w/api.php', {
+    params: {
+      action: 'query',
+      format: 'json',
+      prop: 'extracts',
+      explaintext: true,
+      titles: 'ChatGPT'
+    }
+  })
+    .then(response => {
+      const pages = response.data.query.pages;
+      const pageId = Object.keys(pages)[0];
+      const pageContent = pages[pageId].extract;
+      console.log(pageContent);
+    })
+    .catch(error => {
+      console.error('ERROR:', error);
+    });
+
+  return {
+    props: { data: 'hi' },
+  };
+}
+
+export async function getStaticPaths() {
+  const paths =  [{ params: { id: 'test' } }];
+  return {
+    paths,
+    fallback: false
+  };
 }
 
 export default withStyles(styles)(Article);
